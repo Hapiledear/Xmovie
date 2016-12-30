@@ -1,0 +1,86 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+apply plugin: 'maven'
+apply plugin: 'war'
+
+////////////////////
+repositories {
+	maven { url "http://172.16.60.188:8081/nexus/content/groups/public"  }
+	maven { url "http://repo.spring.io/libs-snapshot"  }
+	mavenCentral()
+}
+
+buildscript {
+	repositories {
+		maven { url "http://172.16.60.188:8081/nexus/content/groups/public" }
+		maven { url "http://repo.spring.io/libs-snapshot" }
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE")
+	}
+}
+
+ext {
+	springBootVersion = "1.2.2.RELEASE"
+	suixingpayVersion ="2.0-SNAPSHOT"
+}
+
+task copyConfigurationCore << {
+	println "Target environment: $environment"
+	copy {
+		from "src/main/env/$environment"
+		into "src/main/resources/gdt_core/dao"
+		include "**/*"
+	}
+	copy {
+		from "src/main/env/$environment"
+		into "src/main/resources/gdt_core/bap/dao"
+		include "**/*"
+	}
+
+}
+
+processResources.dependsOn copyConfigurationCore
+
+////////////////////
+dependencies {
+	compile("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
+//	compile("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-security")
+
+
+	compile 'org.apache.commons:commons-lang3:3.4'
+
+	//mybatis
+	compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.1.1")
+	compile 'org.mybatis:mybatis:3.2.8'
+	compile 'com.github.pagehelper:pagehelper:4.2.0'
+	//druid
+	compile 'com.alibaba:druid:+'
+
+	compile('mysql:mysql-connector-java')
+
+	compile("org.apache.tomcat.embed:tomcat-embed-jasper:8.0.20")
+	compile("javax.servlet:jstl:1.2")
+	compile("javax.servlet:javax.servlet-api:3.1.0")
+
+	compile('commons-lang:commons-lang:2.6'){transitive = false}
+	compile('commons-beanutils:commons-beanutils-core:1.8.3'){transitive = false}
+	compile( 'displaytag:displaytag:1.2'  ){transitive = false}
+}
+
+/////////////////////
+jar {
+	baseName = 'gdt-core'
+	version =  '0.1.0'
+}
+
+/////////////////////
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.12'
+}
+
