@@ -5,17 +5,19 @@
   Time: 16:10
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
-    <title>Login Page - Ace Admin</title>
+    <title>登陆页面</title>
 
     <meta name="description" content="User login page" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
     <%@ include file="common/ace.jsp"%>
+    <%@ include file="common/validator.jsp"%>
 
 </head>
 
@@ -28,10 +30,10 @@
                     <div class="center">
                         <h1>
                             <i class="ace-icon fa fa-leaf green"></i>
-                            <span class="red">Ace</span>
-                            <span class="white" id="id-text2">Application</span>
+                            <span class="red">X-影视</span>
+                            <span class="white" id="id-text2">快速看片</span>
                         </h1>
-                        <h4 class="blue" id="id-company-text">&copy; Company Name</h4>
+                        <h4 class="blue" id="id-company-text">&copy; 杨璜</h4>
                     </div>
 
                     <div class="space-6"></div>
@@ -42,7 +44,7 @@
                                 <div class="widget-main">
                                     <h4 class="header blue lighter bigger">
                                         <i class="ace-icon fa fa-coffee green"></i>
-                                        Please Enter Your Information
+                                        请先进行登陆
                                     </h4>
 
                                     <div class="space-6"></div>
@@ -51,14 +53,14 @@
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="Username" />
+															<input type="text" class="form-control" placeholder="用户名" />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                                             </label>
 
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Password" />
+															<input type="password" class="form-control" placeholder="密码" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
                                             </label>
@@ -68,12 +70,12 @@
                                             <div class="clearfix">
                                                 <label class="inline">
                                                     <input type="checkbox" class="ace" />
-                                                    <span class="lbl"> Remember Me</span>
+                                                    <span class="lbl">记住我</span>
                                                 </label>
 
                                                 <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
                                                     <i class="ace-icon fa fa-key"></i>
-                                                    <span class="bigger-110">Login</span>
+                                                    <span class="bigger-110">登陆</span>
                                                 </button>
                                             </div>
 
@@ -82,7 +84,7 @@
                                     </form>
 
                                     <div class="social-or-login center">
-                                        <span class="bigger-110">Or Login Using</span>
+                                        <span class="bigger-110">或者 通过如下账号登陆</span>
                                     </div>
 
                                     <div class="space-6"></div>
@@ -106,13 +108,13 @@
                                     <div>
                                         <a href="#" data-target="#forgot-box" class="forgot-password-link">
                                             <i class="ace-icon fa fa-arrow-left"></i>
-                                            I forgot my password
+                                           忘记密码
                                         </a>
                                     </div>
 
                                     <div>
                                         <a href="#" data-target="#signup-box" class="user-signup-link">
-                                            I want to register
+                                            快速注册
                                             <i class="ace-icon fa fa-arrow-right"></i>
                                         </a>
                                     </div>
@@ -125,12 +127,12 @@
                                 <div class="widget-main">
                                     <h4 class="header red lighter bigger">
                                         <i class="ace-icon fa fa-key"></i>
-                                        Retrieve Password
+                                        获取密码
                                     </h4>
 
                                     <div class="space-6"></div>
                                     <p>
-                                        Enter your email and to receive instructions
+                                       注册时填写的邮箱
                                     </p>
 
                                     <form>
@@ -145,7 +147,7 @@
                                             <div class="clearfix">
                                                 <button type="button" class="width-35 pull-right btn btn-sm btn-danger">
                                                     <i class="ace-icon fa fa-lightbulb-o"></i>
-                                                    <span class="bigger-110">Send Me!</span>
+                                                    <span class="bigger-110">发送！</span>
                                                 </button>
                                             </div>
                                         </fieldset>
@@ -154,7 +156,7 @@
 
                                 <div class="toolbar center">
                                     <a href="#" data-target="#login-box" class="back-to-login-link">
-                                        Back to login
+                                       返回登陆
                                         <i class="ace-icon fa fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -166,47 +168,47 @@
                                 <div class="widget-main">
                                     <h4 class="header green lighter bigger">
                                         <i class="ace-icon fa fa-users blue"></i>
-                                        New User Registration
+                                        新用户注册
                                     </h4>
 
                                     <div class="space-6"></div>
-                                    <p> Enter your details to begin: </p>
+                                    <p> 填写如下信息: </p>
 
-                                    <form>
+                                    <form id="registForm" method="post" action="">
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control" placeholder="Email" />
+															<input type="email" class="form-control" id="email" name="email" placeholder="邮箱 用于找回密码" />
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
                                             </label>
 
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="Username" />
+															<input type="text" class="form-control" id="name" name="name" placeholder="用户名/账号" />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                                             </label>
 
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Password" />
+															<input type="password" class="form-control" id="password" name="passworld" placeholder="密码" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
                                             </label>
 
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Repeat password" />
+															<input type="password" class="form-control" id="password_again" name="password_again" placeholder="重复密码"  />
 															<i class="ace-icon fa fa-retweet"></i>
 														</span>
                                             </label>
 
-                                            <label class="block">
-                                                <input type="checkbox" class="ace" />
+                                            <label class="block" >
+                                                <input type="checkbox"   class="ace" />
                                                 <span class="lbl">
-															I accept the
-															<a href="#">User Agreement</a>
+															我已经阅读并同意了
+															<a href="#">用户协议</a>
 														</span>
                                             </label>
 
@@ -215,11 +217,11 @@
                                             <div class="clearfix">
                                                 <button type="reset" class="width-30 pull-left btn btn-sm">
                                                     <i class="ace-icon fa fa-refresh"></i>
-                                                    <span class="bigger-110">Reset</span>
+                                                    <span class="bigger-110">重置</span>
                                                 </button>
 
-                                                <button type="button" class="width-65 pull-right btn btn-sm btn-success">
-                                                    <span class="bigger-110">Register</span>
+                                                <button type="button" id="btn_regist" onclick="regist_click()" class="width-65 pull-right btn btn-sm btn-success">
+                                                    <span class="bigger-110">注册</span>
 
                                                     <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                                                 </button>
@@ -231,7 +233,7 @@
                                 <div class="toolbar center">
                                     <a href="#" data-target="#login-box" class="back-to-login-link">
                                         <i class="ace-icon fa fa-arrow-left"></i>
-                                        Back to login
+                                        返回登陆
                                     </a>
                                 </div>
                             </div><!-- /.widget-body -->
@@ -260,11 +262,10 @@
 
 <!-- basic scripts -->
 
-<!--[if !IE]> -->
-<script type="text/javascript" src="<%=request.getContextPath() %>/framework/ace/assets/js/jquery.js"></script>
 
-<!-- <![endif]-->
-
+<script type="text/javascript" src="<%=request.getContextPath() %>/framework/jquery-3.1.1.js"></script>
+<script src="<%=request.getContextPath() %>/framework/ace/assets/js/jquery.validate.js"></script>
+<script src="<%=request.getContextPath() %>/framework/layer/layer.js"></script>
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
@@ -304,6 +305,92 @@
         });
 
     });
+</script>
+<script type="text/javascript">
+
+  validator =  $("#registForm").validate({
+
+        errorElement: 'div',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        ignore: "",
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            name: {
+                required: true,
+                minlength: 10,
+                remote: {
+                    url: "${ctx}/user/hasUser",
+                    type: "post"
+                }
+            },
+            passworld: {
+              required: true,
+                minlength: 5
+            },
+            password_again: {
+                required: true,
+              //  minlength: 5,
+                equalTo: "#password"
+            },
+            agree: {
+                required: true
+            }
+        },
+        messages: {
+            email: {
+                required: "请填写emial，便于找回密码",
+                email: "邮箱格式不正确"
+            },
+            name: {
+                required: "请填写用户名，用于账号登陆",
+                minlength: "用户名至少需要10字符",
+                remote: "用户名已存在！"
+            },
+            passworld: {
+                required: "请填写密码",
+                minlength: "密码长度至少5字符"
+            },
+            password_again: {
+                required: "请再次确认密码",
+                equalTo: "两次输入的密码不相同"
+            },
+            agree: {
+                required: "必须同意协议才能注册"
+            }
+        }
+    });
+
+  function regist_click() {
+    var val =  validator.form();
+      if(val){
+          console.log("通过验证");
+          regist();
+      }
+  }
+
+  function regist() {
+
+        $.ajax({
+            url:"${ctx}/user/regist",
+            type:"POST",
+            data:$("#registForm").serialize(),//表单序列化
+            dataType:"json",
+            success:function(res){
+                console.log(res);
+                if(res.resCode == "0000"){
+                      console.log("成功！");
+                    layer.msg("success!")
+                }else{
+                    console.log("失败");
+                   layer.msg("failed");
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>

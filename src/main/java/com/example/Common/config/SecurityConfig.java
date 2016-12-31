@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //忽略静态资源文件
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**/*.js","/**/*.css","/fonts/**","/images/**","/framework/**","/**/*.jsp");
+        web.ignoring().antMatchers("/**/*.js","/**/*.css","/fonts/**","/images/**","/framework/**","/**/*.jsp","/user/*");
     }
 
     @Override

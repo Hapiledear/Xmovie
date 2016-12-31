@@ -27,4 +27,10 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.findByUsername(username);
     }
+
+    @Override
+    public void insert(UserBean user) {
+        userMapper.insert(user);
+    }
+
 }

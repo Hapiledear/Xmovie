@@ -15,4 +15,12 @@ public class UserBean extends User {
     public void setRoleNames(String roleName) {
         this.roleName = roleName;
     }
+
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "roleName='" + roleName + '\'' +super.toString()+
+                '}';
+    }
 }

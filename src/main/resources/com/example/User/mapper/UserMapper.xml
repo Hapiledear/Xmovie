@@ -18,7 +18,7 @@
       FROM xmovie.user
           LEFT JOIN user_role ON user.uuid = u_id
           LEFT JOIN role ON r_id = role.uuid
-      WHERE "user".name = #{username}
+      WHERE user.name = #{username}
     </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -31,9 +31,9 @@
     where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.example.User.domain.UserBean" >
-    insert into user (uuid, name, passworld
+    insert into user (uuid, name, passworld, email
       )
-    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{passworld,jdbcType=VARCHAR}
+    values (#{uuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{passworld,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.User.domain.UserBean" >

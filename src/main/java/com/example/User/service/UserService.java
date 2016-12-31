@@ -11,4 +11,6 @@ public interface UserService {
     List<UserBean> getAll();
 
     List<UserBean> findByUsername(String username);
+
+    void insert(UserBean user);
 }
