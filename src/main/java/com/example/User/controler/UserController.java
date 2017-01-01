@@ -11,11 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,10 +35,46 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/login")
+   @RequestMapping("/login")
     public ModelAndView login(){
-        return getAutoView().addObject("message","John");
+        return getAutoView();
     }
+
+    @RequestMapping("/home")
+    public ModelAndView home(){
+        return getAutoView();
+    }
+
+    //登陆成功页面
+    @RequestMapping("/login/success")
+    @ResponseBody
+    public String loginSuccess(){
+        LOGGER.info("登陆验证成功！");
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        LOGGER.info("用户信息{}",userDetails.getAuthorities().toString());
+        ResponseJson res = new ResponseJson();
+        res.setRes("0000","登陆成功！");
+
+        return  JSON.toJSONString(res);
+    }
+
+
+
+    //登陆失败页面
+    @RequestMapping("/login/fail")
+    @ResponseBody
+    public String loginFail(){
+        LOGGER.info("登陆验证失败！");
+        ResponseJson res = new ResponseJson();
+        res.setRes("9999","登陆失败！");
+
+        return  JSON.toJSONString(res);
+    }
+
+
+
 
     @RequestMapping("/admin")
     @ResponseBody

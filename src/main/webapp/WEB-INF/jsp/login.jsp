@@ -15,9 +15,13 @@
 
     <meta name="description" content="User login page" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <%@ include file="common/ace.jsp"%>
     <%@ include file="common/validator.jsp"%>
+
 
 </head>
 
@@ -49,21 +53,25 @@
 
                                     <div class="space-6"></div>
 
-                                    <form>
+                                    <form id="loginForm" action="j_spring_security_check">
                                         <fieldset>
+                                            <input type="hidden"
+                                                   name="${_csrf.parameterName}"
+                                                   value="${_csrf.token}"/>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="用户名" />
+															<input name="username" type="text" class="form-control" placeholder="用户名" />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                                             </label>
 
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="密码" />
+															<input name="password" type="password" class="form-control" placeholder="密码" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
                                             </label>
+
 
                                             <div class="space"></div>
 
@@ -73,7 +81,7 @@
                                                     <span class="lbl">记住我</span>
                                                 </label>
 
-                                                <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+                                                <button type="button" onclick="login_click()" class="width-35 pull-right btn btn-sm btn-primary">
                                                     <i class="ace-icon fa fa-key"></i>
                                                     <span class="bigger-110">登陆</span>
                                                 </button>
@@ -307,8 +315,50 @@
     });
 </script>
 <script type="text/javascript">
+    var validator_login = $("#loginForm").validate({
+        errorElement: 'div',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        ignore: "",
+        rules: {
+            username: {required: true},
+            password: {required: true}
+        },
+        messages: {
+            name: {required: "用户名不能为空"},
+            password: {required: "密码不能为空"}
+        }
+    });
+    function login_click() {
 
-  validator =  $("#registForm").validate({
+        var val =  validator_login.form();
+        if(val){
+         //   console.log("通过验证");
+            login();
+        }
+    }
+
+    function login() {
+        $.ajax({
+            url:"login",
+            type:"POST",
+            data:$("#loginForm").serialize(),//表单序列化
+            dataType:"json",
+            success: function (res) {
+               console.log(res);
+                if(res.resCode == "0000"){
+                    window.location.href="/home"
+                }else {
+                   layer.msg(res.resMsg);
+                }
+            }
+        });
+    }
+
+</script>
+<script type="text/javascript">
+
+  var  validator_regist =  $("#registForm").validate({
 
         errorElement: 'div',
         errorClass: 'help-block',
@@ -365,7 +415,7 @@
     });
 
   function regist_click() {
-    var val =  validator.form();
+    var val =  validator_regist.form();
       if(val){
           console.log("通过验证");
           regist();

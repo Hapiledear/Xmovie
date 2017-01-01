@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 /**
  * Created by yang_huang on 2016/12/29.
@@ -27,29 +29,50 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(userDetailsService());
+          auth.userDetailsService(userDetailsService());
+    //    auth.inMemoryAuthentication()
+    //            .withUser("admin").password("admin").roles("admin");
     }
 
     //忽略静态资源文件
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**/*.js","/**/*.css","/fonts/**","/images/**","/framework/**","/**/*.jsp","/user/*");
+        web.ignoring().antMatchers("/**/*.js","/**/*.css","/fonts/**","/images/**","/framework/**","/**/*.jsp","/user/*"
+                );
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+
                 .authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
-                .anyRequest().authenticated()
+                    .antMatchers("/", "/home").permitAll()
+                    .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-             //   .defaultSuccessUrl("/helloadmin")
-                .permitAll()
+                     .loginPage("/login")//action的地址
+                 //    .loginProcessingUrl("/loginAction")
+                     .usernameParameter("username")
+                     .passwordParameter("password")
+
+                    .defaultSuccessUrl("/login/success")
+                    .failureUrl("/login/fail")
+                     .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                     .permitAll()
+                .and()
+                .csrf()
+                    .disable();
+                 //   .csrfTokenRepository(csrfTokenRepository());
+
+    }
+
+    private CsrfTokenRepository csrfTokenRepository()
+    {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setSessionAttributeName("_csrf");
+        return repository;
     }
 
 }
