@@ -40,9 +40,19 @@ public class UserController extends BaseController {
         return getAutoView();
     }
 
+    //主页面
     @RequestMapping("/home")
     public ModelAndView home(){
-        return getAutoView();
+        String userName = null;
+        try {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+            userName = userDetails.getUsername();
+        } catch (Exception e) {
+          //  e.printStackTrace();
+        }
+        return getAutoView().addObject("userName",userName);
     }
 
     //登陆成功页面

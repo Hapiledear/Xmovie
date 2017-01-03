@@ -325,7 +325,7 @@
             password: {required: true}
         },
         messages: {
-            name: {required: "用户名不能为空"},
+            username: {required: "用户名不能为空"},
             password: {required: "密码不能为空"}
         }
     });
@@ -349,7 +349,7 @@
                 if(res.resCode == "0000"){
                     window.location.href="/home"
                 }else {
-                   layer.msg(res.resMsg);
+                   layer.msg(res.resMsg+"用户名或密码错误！");
                 }
             }
         });

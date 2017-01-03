@@ -16,3 +16,6 @@
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/framework/ace/assets/css/ace.css" />
 
 <link  type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/framework/ace/assets/css/ace-rtl.css" />
+<!-- ace settings handler -->
+<script src="<%=request.getContextPath() %>/framework/ace/assets/js/ace-extra.js"></script>
+
