@@ -38,11 +38,8 @@
         <!-- /section:basics/sidebar.mobile.toggle 网站logo-->
         <div class="navbar-header pull-left">
             <!-- #section:basics/navbar.layout.brand -->
-            <a href="#" class="navbar-brand">
-                <small>
-                    <i class="fa fa-movie"></i>
-                    logo在这
-                </small>
+            <a href="#" class="navbar-brand" onclick="flip(); return true;" style="width: 120px">
+                电影区
             </a>
 
             <!-- /section:basics/navbar.layout.brand -->
@@ -385,19 +382,26 @@
 <div class="main-container" id="main-container">
     <div class="main-content">
         <div class="main-content-inner">
-            <div class="page-content ">
+            <div class="page-content " style="padding: 1px">
                 <div class="flipper" id="card" _nowPage="电影">
                     <div class="front">
-                         电影内容
+                         <div id="shadom_mv">
+                             <%--电影内容--%>
+                             <iframe src="${ctx}/movie/homePage" id="mv" onload=" iFrameHeight('mv');"
+                                     width="100%" frameborder="0" scrolling="no"></iframe>
+                         </div>
                     </div>
                     <div class="back">
-                        电视剧内容
+                        <div id="shadom_tv" style="display: none">
+                          <%--  电视剧内容--%>
+                            <iframe src="${ctx}/tv/homePage" id="tv" onload="iFrameHeight('tv')"
+                                   width="100%" frameborder="0" scrolling="no"></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
             <button id="flipTriger" onclick="flip();" data-toggle="tooltip"
                     data-placement="left" title="切换为电视剧">
-
             </button>
         </div>
     </div>
@@ -405,6 +409,7 @@
 
 </body>
 
+<%--页面初始化内容--%>
 <script type="text/javascript">
     jQuery(function($) {
         try{
@@ -419,6 +424,7 @@
         $("[data-toggle='tooltip']").tooltip();
     });
 </script>
+<%--卡片切换效果--%>
 <script type="text/javascript">
     function flip() {
         $("#flipTriger").blur();
@@ -427,13 +433,32 @@
         console.log(oldPage);
         if (oldPage == "电影"){
             $("#card").attr({"_nowPage":"电视剧"});
+            $(".navbar-brand").text("电视剧区");
             $("#flipTriger").attr("data-original-title","切换为电影");
+
+            $("#shadom_tv").css("display","block");
+            $("#shadom_mv").css("display","none");
         }else {
             $("#card").attr({"_nowPage":"电影"});
+            $(".navbar-brand").text("电影区");
             $("#flipTriger").attr("data-original-title","切换为电视剧");
+
+            $("#shadom_tv").css("display","none");
+            $("#shadom_mv").css("display","block");
+
         }
     }
 </script>
-
+<%--iframe自适应高度--%>
+<script type="text/javascript">
+    function iFrameHeight(ifmId) {
+        var ifm= document.getElementById(ifmId);
+        var subWeb = document.frames ? document.frames[ifmId].document : ifm.contentDocument;
+        if(ifm != null && subWeb != null) {
+            console.log("ifm="+ifm.height+"subWeb="+subWeb.body.scrollHeight);
+            ifm.height = subWeb.body.scrollHeight;
+        }
+    }
+</script>
 
 </html>

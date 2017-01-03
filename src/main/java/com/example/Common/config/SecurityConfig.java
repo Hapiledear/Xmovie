@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.header.HeaderWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by yang_huang on 2016/12/29.
@@ -44,9 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
+                .headers()
+                .addHeaderWriter((request,response) -> {response.addHeader("X-Frame-Options","SAMEORIGIN");})
+                .and()
                 .authorizeRequests()
-                    .antMatchers("/", "/home").permitAll()
+                    .antMatchers("/", "/home","/**/homePage").permitAll()
                     .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -54,7 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  //    .loginProcessingUrl("/loginAction")
                      .usernameParameter("username")
                      .passwordParameter("password")
-
                     .defaultSuccessUrl("/login/success")
                     .failureUrl("/login/fail")
                      .permitAll()
@@ -65,7 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                     .disable();
                  //   .csrfTokenRepository(csrfTokenRepository());
-
     }
 
     private CsrfTokenRepository csrfTokenRepository()
