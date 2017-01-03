@@ -8,20 +8,34 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <title>主页</title>
     <%@ include file="common/taglib.jsp"%>
     <%@ include file="common/ace.jsp"%>
+    <style type="text/css">
+        #flipTriger{
+            width:36px;
+            height:36px;
+            background: url(/images/switch.png) no-repeat left top;
+            border:solid 1px #ddd;
+            border-radius:10px;
+            position: fixed;
+            right:5px;
+            top:300px;
+            overflow:hidden;
+            z-index:10000;
+        }
+    </style>
+    <script src="<%=request.getContextPath() %>/framework/jquery.flip.js"></script>
 </head>
 <body class="no-skin">
-<div id="navbar" class="navbar navbar-default">
-    <script type="text/javascript">
-        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
-    </script>
-
+<div id="navbar" class="navbar navbar-default" style="height: 45px">
     <div class="navbar-container" id="navbar-container">
 
-
-        <!-- /section:basics/sidebar.mobile.toggle -->
+        <!-- /section:basics/sidebar.mobile.toggle 网站logo-->
         <div class="navbar-header pull-left">
             <!-- #section:basics/navbar.layout.brand -->
             <a href="#" class="navbar-brand">
@@ -38,9 +52,20 @@
             <!-- /section:basics/navbar.toggle -->
         </div>
 
-        <!-- #section:basics/navbar.dropdown -->
-        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+        <!-- #section:basics/content.searchbox  搜索框-->
+        <div class="navbar-header navbar-search " id="nav-search" style="margin-left: 350px; margin-top: 5px">
+            <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+            </form>
+        </div><!-- /.nav-search -->
+
+        <!-- #section:basics/navbar.dropdown  -->
+        <div class="navbar-header navbar-buttons pull-right" role="navigation">
             <ul class="nav ace-nav">
+
                 <c:choose>
                     <c:when test="${null == userName}">
                         <!-- 登陆链接-->
@@ -353,20 +378,62 @@
             </ul>
         </div>
 
-        <!-- /section:basics/navbar.dropdown -->
+        <!-- /section:basics/navbar.dropdown 用户信息-->
     </div><!-- /.navbar-container -->
 </div>
+<!-- /section:basics/navbar.layout -->
+<div class="main-container" id="main-container">
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content ">
+                <div class="flipper" id="card" _nowPage="电影">
+                    <div class="front">
+                         电影内容
+                    </div>
+                    <div class="back">
+                        电视剧内容
+                    </div>
+                </div>
+            </div>
+            <button id="flipTriger" onclick="flip();" data-toggle="tooltip"
+                    data-placement="left" title="切换为电视剧">
 
+            </button>
+        </div>
+    </div>
+</div>
 
 </body>
 
-<script type="text/javascript" src="<%=request.getContextPath() %>/framework/jquery-3.1.1.js"></script>
-<script src="<%=request.getContextPath() %>/framework/ace/assets/js/bootstrap.js"></script>
-<script src="<%=request.getContextPath() %>/framework/ace/assets/js/jquery-ui.custom.js"></script>
-<script src="<%=request.getContextPath() %>/framework/ace/assets/js/jquery.ui.touch-punch.js"></script>
-<script src="<%=request.getContextPath() %>/framework/ace/assets/js/jquery.easypiechart.js"></script>
-<script src="<%=request.getContextPath() %>/framework/ace/assets/js/jquery.sparkline.js"></script>
-<script src="<%=request.getContextPath() %>/framework/ace/assets/js/flot/jquery.flot.js"></script>
-<script src="<%=request.getContextPath() %>/framework/ace/assets/js/flot/jquery.flot.pie.js"></script>
-<script src="<%=request.getContextPath() %>/framework/ace/assets/js/flot/jquery.flot.resize.js"></script>
+<script type="text/javascript">
+    jQuery(function($) {
+        try{
+            ace.settings.check('navbar' , 'fixed');
+            ace.settings.check('main-container' , 'fixed');
+        }catch(e){}
+
+        $('#card').flip({
+            trigger: 'manual'
+        });
+
+        $("[data-toggle='tooltip']").tooltip();
+    });
+</script>
+<script type="text/javascript">
+    function flip() {
+        $("#flipTriger").blur();
+        $('#card').flip('toggle');
+        var oldPage = $("#card").attr("_nowPage");
+        console.log(oldPage);
+        if (oldPage == "电影"){
+            $("#card").attr({"_nowPage":"电视剧"});
+            $("#flipTriger").attr("data-original-title","切换为电影");
+        }else {
+            $("#card").attr({"_nowPage":"电影"});
+            $("#flipTriger").attr("data-original-title","切换为电视剧");
+        }
+    }
+</script>
+
+
 </html>
