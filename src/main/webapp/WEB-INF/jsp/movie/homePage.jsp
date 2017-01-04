@@ -42,6 +42,9 @@
             background-color: white!important;
             color: #428bca !important;
         }
+        .col-height{
+            height: 300px;
+        }
     </style>
 </head>
 <body  class="no-skin" >
@@ -97,25 +100,35 @@
                            data-slide="next" style="padding-top: 100px;padding-left: 50px">下一张</a>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 col-height">
                     <div id="about_movie" class="scrollLoading col-md-12   margin" data-url="${ctx}/divTemplete?type=about_movie">
                                     loading...
                     </div>
                 </div>
-                <div id="short_movie" class="margin ">
-
+                <div class="col-md-12 col-height">
+                    <div id="short_movie" class=" scrollLoading col-md-12 margin " data-url="${ctx}/divTemplete?type=short_movie">
+                                    loading...
+                    </div>
                 </div>
-                <div id="en_movie">
-
+                <div class="col-md-12 col-height">
+                    <div id="en_movie" class=" scrollLoading col-md-12 margin " data-url="${ctx}/divTemplete?type=en_movie">
+                        loading...
+                    </div>
                 </div>
-                <div id="jp_movie">
-
+                <div class="col-md-12 col-height">
+                    <div id="jp_movie" class=" scrollLoading col-md-12 margin " data-url="${ctx}/divTemplete?type=jp_movie">
+                        loading...
+                    </div>
                 </div>
-                <div id="ch_movie">
-
+                <div class="col-md-12 col-height">
+                    <div id="cn_movie" class=" scrollLoading col-md-12 margin " data-url="${ctx}/divTemplete?type=cn_movie">
+                        loading...
+                    </div>
                 </div>
-                <div id="oc_movie">
-
+                <div class="col-md-12 col-height">
+                    <div id="oc_movie" class=" scrollLoading col-md-12 margin " data-url="${ctx}/divTemplete?type=oc_movie">
+                        loading...
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,9 +139,6 @@
     $(document).ready(function () {
         $(".scrollLoading").scrollLoading();
         $('.carousel').carousel()
-    })
-    $('a.navbar-nav').mouseup(function () {
-        console.log(this);
     })
 </script>
 </html>

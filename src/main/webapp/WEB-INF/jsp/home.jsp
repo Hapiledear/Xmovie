@@ -28,12 +28,8 @@
             overflow:hidden;
             z-index:10000;
         }
-        .margin {
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        .carousel-caption{
-            bottom: 5px;
+        .main-content{
+            background: white;
         }
     </style>
     <script src="<%=request.getContextPath() %>/framework/jquery.flip.js"></script>

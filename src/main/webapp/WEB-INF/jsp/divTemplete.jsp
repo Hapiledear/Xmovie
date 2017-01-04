@@ -18,7 +18,7 @@
             <div class="d-head-l">
                 <span class="d-head-t">
                     <a href="#">
-                        <h2>${type}</h2>
+                        <h2>${ctype}</h2>
                     </a>
                 </span>
             </div>
