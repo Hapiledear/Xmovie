@@ -28,8 +28,16 @@
             overflow:hidden;
             z-index:10000;
         }
+        .margin {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .carousel-caption{
+            bottom: 5px;
+        }
     </style>
     <script src="<%=request.getContextPath() %>/framework/jquery.flip.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/framework/jquery.scrollLoading.js"></script>
 </head>
 <body class="no-skin">
 <div id="navbar" class="navbar navbar-default" style="height: 45px">
@@ -38,7 +46,7 @@
         <!-- /section:basics/sidebar.mobile.toggle 网站logo-->
         <div class="navbar-header pull-left">
             <!-- #section:basics/navbar.layout.brand -->
-            <a href="#" class="navbar-brand" onclick="flip(); return true;" style="width: 120px">
+            <a href="#" class="navbar-brand" id="home_nav" onclick="flip(); return true;" style="width: 120px">
                 电影区
             </a>
 
@@ -385,10 +393,8 @@
             <div class="page-content " style="padding: 1px">
                 <div class="flipper" id="card" _nowPage="电影">
                     <div class="front">
-                         <div id="shadom_mv">
-                             <%--电影内容--%>
-                             <iframe src="${ctx}/movie/homePage" id="mv" onload=" iFrameHeight('mv');"
-                                     width="100%" frameborder="0" scrolling="no"></iframe>
+                         <div id="shadom_mv" >
+                             <%--电影内容 通过ajax异步加载--%>
                          </div>
                     </div>
                     <div class="back">
@@ -422,6 +428,9 @@
         });
 
         $("[data-toggle='tooltip']").tooltip();
+        $("#shadom_mv").load("${ctx}/movie/homePage");
+    /*    $(".scrollLoading").scrollLoading();
+        $('.carousel').carousel()*/
     });
 </script>
 <%--卡片切换效果--%>
@@ -433,14 +442,14 @@
         console.log(oldPage);
         if (oldPage == "电影"){
             $("#card").attr({"_nowPage":"电视剧"});
-            $(".navbar-brand").text("电视剧区");
+            $("#home_nav").text("电视剧区");
             $("#flipTriger").attr("data-original-title","切换为电影");
 
             $("#shadom_tv").css("display","block");
             $("#shadom_mv").css("display","none");
         }else {
             $("#card").attr({"_nowPage":"电影"});
-            $(".navbar-brand").text("电影区");
+            $("#home_nav").text("电影区");
             $("#flipTriger").attr("data-original-title","切换为电视剧");
 
             $("#shadom_tv").css("display","none");

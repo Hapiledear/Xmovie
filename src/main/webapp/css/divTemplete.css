@@ -1,0 +1,135 @@
+
+ul{
+    margin-left: 5px;
+}
+
+.d-head .d-head-t a{
+    color: #222;
+    text-decoration: none;
+}
+.d-head .d-head-l{
+    float: left;
+}
+.d-head .d-link-more{
+    float: right;
+    text-align: center;
+    margin-left: 10px;
+}
+li {
+    list-style: none;
+}
+.v-list li{
+    float: left;
+    margin: 0 20px 20px 0;
+}
+.v {
+    width: 160px;
+    height: 148px;
+    font-size: 12px;
+    overflow: hidden;
+}
+.v .preview{
+    width: 160px;
+    height: 100px;
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    transition: .2s all linear;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 0;
+    border-radius: 4px;
+}
+.v .x {
+    overflow: hidden;
+    visibility: visible;
+    opacity: 0;
+    position: absolute;
+    z-index: 4;
+    bottom: 0;
+    right: 0;
+    height: 20px;
+    /* background: url(/images/v2images/v_pg.png) repeat 0 0;*/
+    line-height: 20px;
+    transition: .2s;
+    border-top-left-radius: 4px;
+}
+.v .x .x2 {
+    float: left;
+    margin: 0 5px 0 5px;
+}
+.v .x b {
+    font-weight: normal;
+    /* font-family: tahoma, arial, 宋体, sans-serif;*/
+    color: rgb(255, 255, 255);
+}
+.v .t {
+    margin-bottom: 5px;
+    height: 20px;
+    line-height: 20px;
+    transition: all .2s linear;
+    color: #222;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    text-align: left;
+}
+.v .i {
+    margin: 0;
+    font-size: 12px;
+    line-height: 12px;
+}
+.v .i span {
+    display: inline-block;
+    vertical-align: top;
+    color: #99a2aa;
+    width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 12px;
+    height: 14px;
+}
+.v .preview img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+    outline: 0;
+}
+.d-head{
+    position: relative;
+}
+.rlist li .number{
+    position: absolute;
+    color: #fff;
+    height: 18px;
+    line-height: 17px;
+    top: 0;
+    left: 0;
+    font-size: 15px;
+    min-width: 20px;
+    text-align: center;
+    background-color: #b8c0cc;
+    z-index: 20;
+    border-radius: 4px;
+    padding: 0 3px 0 3px;
+    font-weight: bolder;
+}
+.rlist li .number.n1{
+    background: #f25d8e;
+}
+.rlist li .t{
+    line-height: 17px;
+    height: 30px;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    color: #222;
+}
+.more-link a{
+    outline: 0;
+    color: #00a1d6;
+    text-decoration: none;
+    cursor: pointer;
+}
